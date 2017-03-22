@@ -85,7 +85,7 @@ def convert_mth_strings ( mth_string ):
 #### VARIABLES 1.0
 
 entity_id = "E1801_HC_gov"
-url = "https://www.herefordshire.gov.uk/government-citizens-and-rights/democracy/transparency-contracts-and-expenditure"
+url = "https://www.herefordshire.gov.uk/downloads/download/583/expenditure_for_2017"
 errors = 0
 data = []
 
