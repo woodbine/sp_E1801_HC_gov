@@ -86,7 +86,6 @@ def convert_mth_strings ( mth_string ):
 
 entity_id = "E1801_HC_gov"
 url = "https://www.herefordshire.gov.uk/downloads/200148/your_council"
-url_m = "https://www.herefordshire.gov.uk/downloads/download/583/expenditure_for_2017"
 errors = 0
 data = []
 
@@ -111,28 +110,17 @@ for link in links:
             csvYr = link_text.split()[1]
         except:
             csvYr = link_text.split('_')[1]
+        if 'April to June' in link_text:
+            csvMth = 'Q2'
+            csvYr = link_text.split()[-1]
+        if 'July to September' in link_text:
+            csvMth = 'Q3'
+            csvYr = link_text.split()[-1]
+        if 'October to December' in link_text:
+            csvMth = 'Q4'
+            csvYr = link_text.split()[-1]
         csvMth = convert_mth_strings(csvMth.upper())
         data.append([csvYr, csvMth, url])
-html_m = urllib2.urlopen(url_m)
-soup_m = BeautifulSoup(html_m, "lxml")
-links = soup_m.findAll('a', 'download__heading')
-for link in links:
-    if 'xpenditure' in link.text:
-        link_page = link['href']
-        html = urllib2.urlopen(link_page)
-        soup = BeautifulSoup(html, "lxml")
-        url = soup.select_one('a[class="button button--standout"]')['href']
-        link_text = link.text.replace('Expenditure for ', '').replace('Expenditure ', '').replace('_expenditure',
-                                                                                                  '').replace(
-            ' expenditure', '')
-        csvMth = link_text[:3]
-        try:
-            csvYr = link_text.split()[1]
-        except:
-            csvYr = link_text.split('_')[1]
-        csvMth = convert_mth_strings(csvMth.upper())
-        data.append([csvYr, csvMth, url])
-
 
 #### STORE DATA 1.0
 
